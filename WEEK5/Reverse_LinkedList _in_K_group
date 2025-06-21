@@ -1,0 +1,56 @@
+class Solution {
+    public static Node reverseKGroup(Node head, int k) {
+        // code here
+        Node temp=head;
+        
+        Node prev=null;
+        while(temp!=null){
+                Node Knode=getKnode(temp,k);
+                if(Knode==null) {
+                    Node newhead=reverse(temp);
+                    if(prev!=null) prev.next=newhead;
+                    else{
+                        return newhead;
+                    }
+                    break;
+                }
+                
+                Node nextnode=Knode.next;
+                Knode.next=null;
+                reverse(temp);
+                if(temp==head) head=Knode;
+                else{
+                    prev.next=Knode;
+                }
+                prev=temp;
+                temp=nextnode;
+    }
+    return head;
+}
+        
+    
+    public static Node getKnode(Node temp, int k) {
+        k=k-1;
+        while(k>0 && temp!=null){
+            temp=temp.next;
+            k--;
+        }
+        return temp;
+    }
+      public static Node reverse(Node head) {
+        // code here
+        if(head==null || head.next==null){
+            
+            return head;
+        }
+        
+        Node newhead=reverse(head.next);
+        
+        Node front=head.next;
+        front.next=head;
+        head.next=null;
+        return newhead;
+        
+    }
+    
+}
