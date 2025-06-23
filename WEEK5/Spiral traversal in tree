@@ -1,0 +1,26 @@
+class Solution {
+    public ArrayList<Integer> findSpiral(Node root) {
+        // code here
+       Queue<Node> q= new LinkedList<>();
+       q.add(root);
+       boolean l2r=true;
+       ArrayList<Integer> arr=new ArrayList<>();
+       while(!q.isEmpty()){
+           int len=q.size();
+           int num[]=new int[len];
+           for(int i=0; i<len; i++){
+               Node node=q.poll();
+               
+               int idx= l2r ? len-i-1 : i;
+               num[idx]=node.data;
+               if(node.left!=null) q.add(node.left);
+               if(node.right!=null) q.add(node.right);
+           }
+           for(int i=0; i<len; i++){
+               arr.add(num[i]);
+           }
+           l2r=!l2r;
+       }
+       return arr;
+    }
+}
