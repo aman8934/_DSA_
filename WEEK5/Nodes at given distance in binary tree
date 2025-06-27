@@ -1,0 +1,72 @@
+// class Node
+// {
+//     int data;
+//     Node left, right;
+// }
+
+class Pair{
+    Node temp;
+    int dis;
+   
+    public Pair(int dis, Node temp){
+        this.dis=dis;
+        this.temp=temp;
+    }
+}
+class Solution {
+   
+    public static ArrayList<Integer> KDistanceNodes(Node root, int target, int k) {
+        
+       
+        ArrayList<Integer> arr =new ArrayList<>();
+        HashSet<Node> vis =new HashSet<>();
+        HashMap<Node,Node> map =new HashMap<>();
+        Queue<Pair> q =new LinkedList<>();
+        mp(root,null,map);
+        Node node = trget(root,target);
+        if (node == null) return arr;
+        q.add(new Pair(0,node));
+        while(!q.isEmpty()){
+            Pair p=q.poll();
+            int dis=p.dis;
+            Node curr=p.temp;
+            Node prev=map.get(curr);
+            if(k==dis){
+                arr.add(curr.data);
+            }  
+            vis.add(curr);
+            if(dis<k){
+            if(curr.left!=null && !vis.contains(curr.left )){ q.add(new Pair(1+dis,curr.left)); }
+            if(curr.right!=null && !vis.contains(curr.right)) q.add(new Pair(1+dis,curr.right));
+            if(prev!=null  && !vis.contains(prev)) q.add(new Pair(1+dis,prev));
+            }
+        }
+        Collections.sort(arr);
+        return arr;
+    }
+    public static Node trget(Node root, int target) {
+    if (root == null) {
+        return null;
+    }
+
+    if (root.data == target) {
+        return root;
+    }
+
+    Node left = trget(root.left, target);
+    if (left != null) {
+        return left;
+    }
+
+    return trget(root.right, target);
+}
+
+      public static void mp(Node root,Node prev,HashMap<Node,Node> map) {
+        if(root==null) return ;
+        
+        map.put(root,prev);
+        mp(root.left,root,map);
+        mp(root.right,root,map);
+        return;
+    }
+};
