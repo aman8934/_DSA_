@@ -1,0 +1,33 @@
+class Solution {
+
+    public static int countNodes(Node root) {
+        // Code here
+        if (root==null) return 0;
+        int lh=left(root);
+        int rh=right(root);
+        if(lh==rh) return ((2<<(lh))-1);
+        else{
+            return countNodes(root.left)+countNodes(root.right)+1;
+        }
+    }
+     public static int left(Node root) {
+        // Code here
+        int cnt=0;
+        if (root==null) return 0;
+        while(root.left!=null){
+            cnt++;
+            root=root.left;
+        }
+        return cnt;
+    }
+    public static int right(Node root) {
+        // Code here
+        int cnt=0;
+        if (root==null) return 0;
+        while(root.right!=null){
+            cnt++;
+            root=root.right;
+        }
+        return cnt;
+    }
+}
